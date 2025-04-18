@@ -57,7 +57,7 @@ if __name__ == "__main__":
     
     jokes, scrapped_range = scrape_jokes(
         source_url=source_url,
-        num_pages=range(None, None),
+        num_pages=range(201, 301),
         delay=2.5,
     )
     save_jokes_to_json(jokes, scrapped_range)
