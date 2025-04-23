@@ -1,31 +1,27 @@
 from transformers import AutoTokenizer
-from datasets import load_dataset, Dataset
 import json
 
-# Load jokes
-with open("clean_polish_jokes.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
-
-# Convert to Hugging Face dataset
-joke_texts = [{"text": entry["joke"]} for entry in data]
-dataset = Dataset.from_list(joke_texts)
-
-model_name = "flax-community/papuGaPT2"
+# Load tokenizer
+model_name = "szymonrucinski/Krakowiak-7B-v2"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-tokenizer.pad_token = tokenizer.eos_token  # GPT2-style
 
-# Tokenize the dataset
-def tokenize_fn(example):
-    return tokenizer(
-        example["text"],
-        truncation=True,
-        padding="max_length",
-        max_length=128  # Adjust as needed
-    )
+# Load cleaned jokes
+with open("clean_all_jokes.json", "r", encoding="utf-8") as f:
+    jokes = json.load(f)
 
-tokenized_dataset = dataset.map(tokenize_fn, batched=True)
+# Tokenize all jokes and store tokenized info
+tokenized_jokes = []
+for joke in jokes:
+    text = joke["joke"]
+    tokens = tokenizer.encode(text, add_special_tokens=True)
+    tokenized_jokes.append({
+        "joke": text,
+        "num_tokens": len(tokens),
+        "tokens": tokens,
+    })
 
-# Save tokenized data if needed
-tokenized_dataset.save_to_disk("tokenized_polish_jokes")
+# Save tokenized jokes
+with open("tokenized_jokes_krakowiak.json", "w", encoding="utf-8") as f:
+    json.dump(tokenized_jokes, f, ensure_ascii=False, indent=2)
 
-print("Tokenization complete. Ready for training.")
+print(f"✅ Tokenized {len(tokenized_jokes)} jokes using {model_name}")
