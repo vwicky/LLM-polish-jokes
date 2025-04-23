@@ -9,4 +9,4 @@ The jokes were scraped from **[https://perelki.net](https://perelki.net)** using
 
 ## Model
 
-In the v0.0.1 I used papuGaPT2 **[https://huggingface.co/flax-community/papuGaPT2]flax-community/papuGaPT2**
+In the v0.0.1 I used papuGaPT2 **[https://huggingface.co/flax-community/papuGaPT2](flax-community/papuGaPT2)**
