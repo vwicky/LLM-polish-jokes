@@ -34,7 +34,7 @@ def save_clean_jokes(jokes, output_file):
 # === Run this ===
 if __name__ == "__main__":
     raw_dir = "./jokes_raw"
-    output_file = "clean_polish_jokes.json"
+    output_file = "clean_Perelki_jokes.json"
 
     raw_jokes = load_all_jokes_from_dir(raw_dir)
     print(f"Loaded {len(raw_jokes)} jokes from raw files.")
